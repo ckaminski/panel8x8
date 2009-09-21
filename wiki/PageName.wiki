@@ -8,7 +8,7 @@ Welcome to and Panel8x8 wiki.
 
 = Details =
 
-Contents of the ReadMe from Version 1.03
+Contents of ReadMe.TXT from Version 1.03
 
 Panel8x8 
 Support library for the 8x8 LED Panel
