@@ -14,7 +14,7 @@ Panel8x8
 Support library for the 8x8 LED Panel
 Available from http://ModernDevice.Com
 
-By Dataman, aka Charley Jones, 8x8Panel@CRJOnes.Com
+By Dataman, aka Charley Jones, 8x8Panel@CRJones.Com
 
 Version Log:
 
