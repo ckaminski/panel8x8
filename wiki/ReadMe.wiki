@@ -1,3 +1,4 @@
+#labels Featured,Phase-Deploy,Phase-Implementation
 #Contents of ReadMe.Txt v1.03
 
 = Introduction =
