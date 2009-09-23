@@ -5,10 +5,10 @@ Available from ModernDevice.Com
 By Dataman, aka Charley Jones, 8x8Panel@CRJOnes.Com
 
 Version Log:
-
-2009-09-17 V1 Initial 
-2009-09-18 V2 Bug fixes, replace example 4, added example 5
+2009-09-23 V4 Discovered that defines in client code will not override library defines
 2009-09-19 V3 Changed pin outputs to bbb standard
+2009-09-18 V2 Bug fixes, replace example 4, added example 5
+2009-09-17 V1 Initial 
 
 
 Notes:
@@ -122,8 +122,8 @@ I'm happy to say that they can.
 
 Short List of Switches:
 
-All can be set in code to override library settings.
-Define before including Panel8x8.h
+Must be declared in Panel.h,
+Trying to overried in client code does not work.
 
 #define PANELS       4  // The Max Number of panels (each panel consumes 8 bytes ram buffer spaces + 16 total overhead)
 Usage:
