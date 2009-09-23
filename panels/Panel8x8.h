@@ -4,6 +4,7 @@
 // Kits & Schematics available at ModernDevice.Com
 //
 // By Dataman aka Charley Jones, 8x8Panel@CRJones.Com
+// 2009-09-23 V1.4 - Overrides not working from client code
 // 2009-09-19 V1.3 - Initial Release
 // 2009-09-18 V1.2 - Bug Fixes
 // 2009-09-17 V1.1 - Initial Version
@@ -23,9 +24,7 @@
 //                                        no text scrolling though.
 
 // Configuration
-#ifndef PANELS          // Allows user to redefine # of supported panels on the fly
 #define PANELS       4  // The Max Number of panels (each panel consumes 8 bytes ram buffer spaces)
-#endif              
 #define LATCHPIN     4  // Pin connected to SPI latch
 #define OUTPUTENABLE 5  // Pin connected to SPI output enable - high equals off
 #define CLOCKPIN     6  // Pin connected to SPI clock - low to write new new data - high to transfer the data to the output buffers
@@ -33,7 +32,7 @@
 
 // Animation File Version
 #define VERSION8X8MAJOR   1  // Current library version MAJOR.MINOR
-#define VERSION8X8MINOR   3  // Current library version
+#define VERSION8X8MINOR   4  // Current library version
 
 // Defines
 #define LOWMASK    255  // The LOWMASK for stripping off High Bits
