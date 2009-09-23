@@ -157,11 +157,8 @@ I'm happy to say that they can.
 
 *Short List of Switches:*
 
-*PLEASE NOTE: SWITCHES DO NOT APPEAR TO BE WORKING FROM USER CODE *
-*PLEASE SET ALL SWITCHED DIRECTLY IN Panel8x8.h*
-
-All can be set in code to override library settings.
-Define before including Panel8x8.h
+All define must be set in Panel.h
+Override is not working from client code.
 
 #define PANELS       4  // The Max Number of panels (each panel consumes 8 bytes ram buffer spaces + 16 total overhead)
 
