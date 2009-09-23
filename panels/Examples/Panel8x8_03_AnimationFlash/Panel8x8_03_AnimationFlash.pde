@@ -7,14 +7,12 @@
 // Kits & Schematics available at ModernDevice.Com
 //
 // By Dataman aka Charley Jones, 8x8Panel@CRJones.Com
+// 2009-09-22 Removed PANELS include
 // 2009-09-17 Initial Version
 
-// Overrides default panel support
-// Set this value to the number of physical panels to support
-#define PANELS 2
-
-// Save some memory as we won't be needing text display
-#define PANEL8X8_NO_CHDATA
+// Please remember to set PANELS to the physical number of
+// panels to support in Panel8x8.h -- defaults to 4.
+// In most cases for 1-4 panels this won't make any difference.
 
 // Required include for the Panel8x8 library
 #include <Panel8x8.h>
