@@ -4,6 +4,7 @@
 // Kits & Schematics available at ModernDevice.Com
 //
 // By Dataman aka Charley Jones, 8x8Panel@CRJones.Com
+// 2009-09-25 V1.5 - Fixup include path for unix compiler
 // 2009-09-23 V1.4 - Overrides not working from client code
 // 2009-09-19 V1.3 - Initial Release
 // 2009-09-18 V1.2 - Bug Fixes
@@ -13,7 +14,7 @@
 #define Panel8x8b_h
 
 #include "avr/pgmspace.h"            // Header to access ProgMem
-#include "..\Streaming\Streaming.h"  // Header to allow streaming operations String << "TEST"; Simplifies output.
+#include "../Streaming/Streaming.h"  // Header to allow streaming operations String << "TEST"; Simplifies output.
 
 // -------------------- DEFINES ---------------------------
 
