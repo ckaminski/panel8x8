@@ -5,10 +5,11 @@ Available from ModernDevice.Com
 By Dataman, aka Charley Jones, 8x8Panel@CRJOnes.Com
 
 Version Log:
-2009-09-23 V4 Discovered that defines in client code will not override library defines
-2009-09-19 V3 Changed pin outputs to bbb standard
-2009-09-18 V2 Bug fixes, replace example 4, added example 5
-2009-09-17 V1 Initial 
+2009-09-25 V1.5 Fixup include path for unix compiler
+2009-09-23 V1.4 Discovered that defines in client code will not override library defines
+2009-09-19 V1.3 Changed pin outputs to bbb standard
+2009-09-18 V1.2 Bug fixes, replace example 4, added example 5
+2009-09-17 V1.1 Initial 
 
 
 Notes:
