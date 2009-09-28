@@ -5,6 +5,7 @@ Available from ModernDevice.Com
 By Dataman, aka Charley Jones, 8x8Panel@CRJOnes.Com
 
 Version Log:
+2009-09-28 V1.6 Supporting Serial8x8
 2009-09-25 V1.5 Fixup include path for unix compiler
 2009-09-23 V1.4 Discovered that defines in client code will not override library defines
 2009-09-19 V1.3 Changed pin outputs to bbb standard
