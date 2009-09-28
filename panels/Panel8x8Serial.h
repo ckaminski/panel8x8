@@ -38,11 +38,6 @@ public:
           Panel8x8::Panel8x8();
     }
 
-    //Begin(char *buffer, int bufsize, int buflen, int isProgMem):
-    //  Panel8x8::Begin(buffer,bufsize,buflen,isProgMem){
-    //	PanelMode = 3;
-    //}
-
     void About();
 
     void Loop(){
