@@ -25,7 +25,7 @@
 
 // Animation File Version
 #define PANEL8X8SERIALMAJOR   1            // Current library version
-#define PANEL8X8SERIALMINOR   1            // Current library version
+#define PANEL8X8SERIALMINOR   6            // Current library version
 
 #define PANEL8X8SERIALFILE    2            // Serial File Version Number
 
@@ -53,7 +53,6 @@ public:
 
     int CheckSerial();
 
-    int WriteByte(int idx, byte ib);     // Writes given byte to the input buffer
 
 };
 

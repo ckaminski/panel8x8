@@ -379,7 +379,12 @@ void Panel8x8::SetScrolling(short i) {
 	else {bIsScrolling = true;}
 }
 
-
-
-
+// WriteByte
+// Writes an byte to the given index of the input buffer if possible,
+// returns -1 if not  
+int Panel8x8::WriteByte(int idx, byte iBtye) {
+  if (isBufferProgMem) {return -1;}
+  *(ramBuffer+idx)=iBtye;
+  return 0;
+}
 

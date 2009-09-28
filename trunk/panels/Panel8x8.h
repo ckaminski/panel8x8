@@ -4,6 +4,7 @@
 // Kits & Schematics available at ModernDevice.Com
 //
 // By Dataman aka Charley Jones, 8x8Panel@CRJones.Com
+// 2009-09-28 V1.6 - Support for Serial8x8
 // 2009-09-25 V1.5 - Fixup include path for unix compiler
 // 2009-09-23 V1.4 - Overrides not working from client code
 // 2009-09-19 V1.3 - Initial Release
@@ -83,6 +84,7 @@ public:
  void    DumpPanels();              // Dumps the output buffer contents in panel form to serial
  void    FillOutput();              // Fill output buffer with text
  uint8_t GetByte(int ib);           // Gets given byte from the input buffer
+ int     WriteByte(int idx, byte ib);   // Writes given byte to the input buffer
  int     getNextLetter(int l);      // Gets next letter in the text input buffer
  void    LoadAnimation();           // Loads next animation frame
  void    Loop();                    // The main processing pump
