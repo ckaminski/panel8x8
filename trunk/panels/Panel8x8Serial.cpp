@@ -2,15 +2,20 @@
 // Simplifies programming the 8x8 LED Panel avaialable from ModernDevice.Com
 // This version adds serial support
 // See Examples and ReadMe.TXT
-// Kits & Schematics avaialbe at ModernDevice.Com
+// Kits & Schematics available at ModernDevice.Com
 //
 // By Dataman aka Charley Jones, 8x8Panel@CRJones.Com
 // 2009-09-17 Initial Version
 #include "Panel8x8Serial.h"
 
+void Panel8x8Serial::About() {
+  Serial << "Panel8x8Serial " << PANEL8X8SERIALMAJOR << "." << PANEL8X8SERIALMINOR << endl;
+  Panel8x8::About();
+}
+
 // CheckSerial
 // Checks for commands on the serial port
-void Panel8x8Serial::CheckSerial() {
+int Panel8x8Serial::CheckSerial() {
   int i,j,k;
   uint8_t     sr;
   uint16_t    *ptr;  
@@ -24,15 +29,13 @@ void Panel8x8Serial::CheckSerial() {
      // Look for start of command
      if (sr==27 && sCommand==0) {
        sCommand = 1;
-       //Serial << "Have Command" << endl;
      }
      
      // Command processing
      // If HaveCommand then we saw an escape which is a start of command sequence character
      // Look for Esc-C, Esc-F, Esc-L, or ESC-S
      else if (sCommand == 1) {
-       //Serial << "Command Decode " << _DEC(sr) << endl;
-       if      (sr=='C') {TextBox[0] = 0; NewMessage(); sCommand=0;}
+       if      (sr=='C') {WriteByte(0,0); iBufferLen=0; NewMessage(); sCommand=0;}
        else if (sr=='T') {PanelMode=11; sCommand=1;} //Loading Text
        else if (sr=='F') {PanelMode=12; sCommand=2;} //Loading Animation
        else if (sr=='L') {PanelMode=13; sCommand=3;} //Live Animation
@@ -56,8 +59,8 @@ void Panel8x8Serial::CheckSerial() {
        if (j==0) {PanelMode=1; NewMessage(); sCommand=0;}   // End of processing if 0 length buffer
       }
       else {
-       TextBox[i++] = char(sr); 
-       if (--j==0) {TextBox[i]=char(0); PanelMode=1; NewMessage(); sCommand=0;} // End of processing if no more text
+       WriteByte(i++,sr); 
+       if (--j==0) {WriteByte(i,0); iBufferLen=i; PanelMode=1; NewMessage(); sCommand=0;} // End of processing if no more text
       }
      }
      
@@ -73,7 +76,7 @@ void Panel8x8Serial::CheckSerial() {
          ptr = (uint16_t *)inbuffer;
          i = *(ptr++);
          //Serial << "Version: " << _DEC(i) << endl;
-         if (i!=iVersion) {Serial.print(char(1)); PanelMode=2; sCommand=0;}  //Send back a 1 as error, wrong version.
+         if (i!=PANEL8X8SERIALFILE) {Serial.print(char(1)); PanelMode=2; sCommand=0;}  //Send back a 1 as error, wrong version.
          iPanels = *(ptr++);
          iFrames = *(ptr++);
          frameDelay = *(ptr);
@@ -87,7 +90,7 @@ void Panel8x8Serial::CheckSerial() {
       }
       // Data Processing
       else {
-       TextBox[i++] = char(sr); 
+       WriteByte(i++,sr); 
        if (i==l) {Serial.print(char(0)); PanelMode=2; sCommand=0;} // End of processing no more data.
       }
      }
@@ -104,7 +107,7 @@ void Panel8x8Serial::CheckSerial() {
          ptr = (uint16_t *)inbuffer;
          i = *(ptr++);
          //Serial << "Version: " << _DEC(i) << endl;
-         if (i!=iVersion) {Serial.print(char(1)); PanelMode=3; sCommand=0;}  //Send back a 1 as error, wrong version.
+         if (i!=PANEL8X8SERIALFILE) {Serial.print(char(1)); PanelMode=3; sCommand=0;}  //Send back a 1 as error, wrong version.
          iPanels = *(ptr++);
          iFrames = 1;
          frameDelay = *(ptr);
@@ -129,13 +132,21 @@ void Panel8x8Serial::CheckSerial() {
      
      // Settings commands
      else if (sCommand == 4) {
-         if      (sr==0) {iPanels = sr; SetupScroll(); sCommand=0;}
+         if      (sr==0) {Begin((char *)ramBuffer,iBufferSize,iBufferLen,(int)isBufferProgMem); sCommand=0;}
          else if (sr==1) {frameDelay = sr; sCommand=0;}
          else if (sr==2) {sCommand=0;}
      }
    }
   }
 }
+
+int Panel8x8Serial::WriteByte(int idx, byte iBtye) {
+  if (isBufferProgMem) {return -1;}
+  *(ramBuffer+idx)=iBtye;
+  return 0;
+}
  
+
+
 
 
