@@ -140,12 +140,7 @@ int Panel8x8Serial::CheckSerial() {
   }
 }
 
-int Panel8x8Serial::WriteByte(int idx, byte iBtye) {
-  if (isBufferProgMem) {return -1;}
-  *(ramBuffer+idx)=iBtye;
-  return 0;
-}
- 
+
 
 
 
