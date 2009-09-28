@@ -33,7 +33,7 @@
 
 // Animation File Version
 #define VERSION8X8MAJOR   1  // Current library version MAJOR.MINOR
-#define VERSION8X8MINOR   4  // Current library version
+#define VERSION8X8MINOR   6  // Current library version
 
 // Defines
 #define LOWMASK    255  // The LOWMASK for stripping off High Bits
@@ -45,6 +45,7 @@ class Panel8x8 {
 
  //Private Variables
  // Globals
+public:
  int i, j, k, l;                    // Generic Loop counters
  int maxStringSize;                 // Size of the output message
  boolean bIsScrolling;              // Turns on and off scrolling
@@ -54,7 +55,6 @@ class Panel8x8 {
  uint8_t tbyte;                     // General temporary 1 byte
  prog_uint8_t iRawByte;             // General Pogram Memmory type 1 Byte;
 
-public:
  byte     iPanels;                  // Current number of panels
  uint16_t iFrames;                  // Number of animation frames
  int idxPanel;                      // Current Panel Number
