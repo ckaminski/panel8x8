@@ -16,7 +16,7 @@ void Panel8x8Serial::About() {
 // CheckSerial
 // Checks for commands on the serial port
 int Panel8x8Serial::CheckSerial() {
-  int i,j,k;
+  int i,j,k,MaxText;
   uint8_t     sr;
   uint16_t    *ptr;  
   static byte sCommand = 0;
@@ -28,13 +28,13 @@ int Panel8x8Serial::CheckSerial() {
      
      // Look for start of command
      if (sr==27 && sCommand==0) {
-       sCommand = 1;
+       sCommand = 255;
      }
      
      // Command processing
      // If HaveCommand then we saw an escape which is a start of command sequence character
      // Look for Esc-C, Esc-F, Esc-L, or ESC-S
-     else if (sCommand == 1) {
+     else if (sCommand == 255) {
        if      (sr=='C') {WriteByte(0,0); iBufferLen=0; NewMessage(); sCommand=0;}
        else if (sr=='T') {PanelMode=11; sCommand=1;} //Loading Text
        else if (sr=='F') {PanelMode=12; sCommand=2;} //Loading Animation
@@ -48,24 +48,31 @@ int Panel8x8Serial::CheckSerial() {
      
      // Text Loading 
      else if (sCommand == 1) { //Text Loading Mode
-      if (k++<2) {
-       inbuffer[k]=char(sr);  
-      }  
-      else if (k==2) {
-       k++;
-       bIsScrolling=true;
-       ptr = (uint16_t *)inbuffer;
-       j = *ptr;
-       if (j==0) {PanelMode=1; NewMessage(); sCommand=0;}   // End of processing if 0 length buffer
-      }
+      if (k<=3) {
+       inbuffer[k++]=char(sr);  
+       if (k==4) {
+	    k++;
+        ClearOutput();
+        bIsScrolling=true;
+        ptr = (uint16_t *)inbuffer;
+	    frameDelay = *ptr++;
+        MaxText = *ptr;
+        //Serial << "frameDelay: " << frameDelay << endl;
+        //Serial << "Length: " << j << endl;
+        iBufferLen=0;
+	    if  (MaxText>iBufferSize) {j=0;}
+        if (MaxText==0) {PanelMode=1; NewMessage(); sCommand=0;}   // End of processing if 0 length buffer
+       }
+	  }
       else {
-       WriteByte(i++,sr); 
-       if (--j==0) {WriteByte(i,0); iBufferLen=i; PanelMode=1; NewMessage(); sCommand=0;} // End of processing if no more text
+       WriteByte(iBufferLen++,sr); 
+       //Serial << iBufferLen << " " << sr << endl;
+       if (iBufferLen>=MaxText) {WriteByte(iBufferLen,0); PanelMode=1; NewMessage(); sCommand=0;} // End of processing if no more text
       }
      }
      
      // Animation Loading
-     else if (sCommand == 2) { // Live Animation Load Mode
+     else if (sCommand == 2) { // Animation Load Mode
       // Parameter Processing
       if (k<=7) {
         //Serial << "Param: " << _DEC(k) << " = " << _DEC(sr) << endl;
@@ -84,7 +91,8 @@ int Panel8x8Serial::CheckSerial() {
          //Serial << "Fames: " << iFrames << endl;
          //Serial << "Delay: " << frameDelay << endl;
          l = iPanels * 8 * iFrames;
-         i=0;
+		 i=0;
+		 if (isBufferProgMem || l > iBufferSize) {l=0;}
          if (l==0) {Serial.print(char(1)); PanelMode=2; sCommand=0;}   // End of processing if 0 length buffer
         }
       }
@@ -122,7 +130,7 @@ int Panel8x8Serial::CheckSerial() {
       }
       // Data Processing
       else {
-      //Serial << _DEC(l) << ":" << _DEC(sr) << endl;
+       //Serial << _DEC(l) << ":" << _DEC(sr) << endl;
        iScroll[j][i++] = sr;
        if (i==8) {i=0; j++;} 
        --l;
