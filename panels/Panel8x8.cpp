@@ -189,7 +189,8 @@ void Panel8x8::Loop() {
 // Called when a new text message is received
 // Resets the matric to the new message
 void Panel8x8::NewMessage() {
- ClearOutput();
+ idxScroll=0;
+ idxMsg=0;
  FillOutput();
 }
 

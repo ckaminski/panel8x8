@@ -34,11 +34,15 @@
 class Panel8x8Serial:public Panel8x8 { 
 public:
     Panel8x8Serial(){
-  	  Serial.begin(57600);
           Panel8x8::Panel8x8();
     }
 
     void About();
+
+	void Begin(char *Buffer, int pBufferSize, int pBufferLen, int pIsBufferProgMem) {
+		Serial.begin(9600);	
+		Panel8x8::Begin(Buffer,pBufferSize,pBufferLen,pIsBufferProgMem);
+	}
 
     void Loop(){
 		if (!CheckSerial()) {
