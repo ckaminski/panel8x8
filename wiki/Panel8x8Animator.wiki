@@ -16,3 +16,5 @@ Use COMM to upload or stream animations to the board.
 The program will refuse to upload animations if there is enough RAM space available or if a Program Memory buffer was chosen.  In this case you should stream animations to the board.
 
 Streaming sends frames of data directly to the panel.  On successful completion, the next panel is sent.  The Animation is looped at the end.
+
+Minimum version 1.06 & Example 6 are required.
