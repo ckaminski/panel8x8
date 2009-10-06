@@ -4,7 +4,9 @@
 // Kits & Schematics avaialbe at ModernDevice.Com
 //
 // By Dataman aka Charley Jones, 8x8Panel@CRJones.Com
+// 2009-10-06 V1.6 Working Serial Library / Flicker Free Display /  Support for Panel8x8Support Package
 // 2009-09-17 Initial Version
+
 #ifndef Panel8x8Serialb_h
 #define Panel8x8Serailb_h
 
@@ -13,6 +15,18 @@
 //#include "..\Streaming\Streaming.h"  // Header to allow streaming operations String << "TEST"; Simplifies output.
 //#include "..\String\WString.h"       // Header to allow string operations
 
+//#define DEBUG8X8SERIAL
+// To Use this serial debug object you will need to define a NewSoftSerial object in your main code
+// And pass the object to the SerialPanel object
+// In this case, we use A4/A5 for serial output (9600 baud).
+// #include <NewSoftSerial.h>
+// NewSoftSerial debug(18,19);
+// Panel8x8Serial Panel(&debug);
+#ifdef DEBUG8X8SERIAL
+#include "../NewSoftSerial/NewSoftSerial.h"
+#define crlf "?n"
+#define cls  "?f?a"
+#endif
 
 // -------------------- DEFINES ---------------------------
 
@@ -33,9 +47,19 @@
 
 class Panel8x8Serial:public Panel8x8 { 
 public:
-    Panel8x8Serial(){
+    Panel8x8Serial(void){
           Panel8x8::Panel8x8();
     }
+
+#ifdef DEBUG8X8SERIAL
+    Panel8x8Serial(NewSoftSerial *serial){
+		  _debug = serial;
+		  _debug->begin(9600);
+		  (*_debug) << cls;
+		  About();
+          Panel8x8::Panel8x8();
+    }
+#endif
 
     void About();
 
@@ -51,8 +75,10 @@ public:
 	}
 
     int CheckSerial();
-
-
+private:
+#ifdef DEBUG8X8SERIAL
+	NewSoftSerial *_debug;
+#endif
 };
 
 #endif Panel8x8Serialb_h
