@@ -4,8 +4,8 @@
 // Kits & Schematics avaialbe at ModernDevice.Com
 //
 // By Dataman aka Charley Jones, 8x8Panel@CRJones.Com
-// 2009-10-06 V1.6 Working Serial Library / Flicker Free Display /  Support for Panel8x8Support Package
-// 2009-09-28 V1.5 Intermin working copy of Serial Object 
+// 2009-10-06 V1.6 - Working Serial Library / Flicker Free Display /  Support for Panel8x8Support Package
+// 2009-09-28 V1.5 - Fixup include path for unix compiler 
 // 2009-09-23 V1.4 - Overrides not working from client code
 // 2009-09-19 V1.3 - Initial Release
 // 2009-09-18 V1.2 - Bug Fixes
