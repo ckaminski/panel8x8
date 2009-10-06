@@ -5,18 +5,25 @@
 // Kits & Schematics available at ModernDevice.Com
 //
 // By Dataman aka Charley Jones, 8x8Panel@CRJones.Com
+// 2009-10-06 V1.6 Working Serial Library / Flicker Free Display /  Support for Panel8x8Support Package
 // 2009-09-17 Initial Version
 #include "Panel8x8Serial.h"
 
 void Panel8x8Serial::About() {
+#ifdef DEBUG8X8SERIAL
+  (*_debug) << "Panel8x8Serial " << PANEL8X8SERIALMAJOR << "." << PANEL8X8SERIALMINOR << crlf;
+#else
   Serial << "Panel8x8Serial " << PANEL8X8SERIALMAJOR << "." << PANEL8X8SERIALMINOR << endl;
+#endif
   Panel8x8::About();
 }
 
 // CheckSerial
 // Checks for commands on the serial port
 int Panel8x8Serial::CheckSerial() {
-  int i,j,k,MaxText;
+  static int i,j,k;
+  static int iReceiveBuffer;
+  static int iBufferBlock;
   uint8_t     sr;
   uint16_t    *ptr;  
   static byte sCommand = 0;
@@ -40,8 +47,10 @@ int Panel8x8Serial::CheckSerial() {
        else if (sr=='F') {PanelMode=12; sCommand=2;} //Loading Animation
        else if (sr=='L') {PanelMode=13; sCommand=3;} //Live Animation
        else if (sr=='S') {              sCommand=4;} //Settings mode
-       //Serial << "Command Decoded " << _DEC(sCommand) << endl;
-       i=0;  //Index into char text buffer
+#ifdef DEBUG8X8SERIAL
+       (*_debug) << "Command Decoded " << _DEC(sCommand) << crlf;
+#endif
+	   i=0;  //Index into char text buffer
        j=0;  //Packet length
        k=0;  //Parameters buffer length
      }
@@ -49,25 +58,34 @@ int Panel8x8Serial::CheckSerial() {
      // Text Loading 
      else if (sCommand == 1) { //Text Loading Mode
       if (k<=3) {
-       inbuffer[k++]=char(sr);  
+#ifdef DEBUG8X8SERIAL
+	   (*_debug) << "Param: " << _DEC(k) << " = " << _DEC(sr) << crlf;
+#endif
+	   inbuffer[k++]=char(sr);  
        if (k==4) {
 	    k++;
         ClearOutput();
         bIsScrolling=true;
         ptr = (uint16_t *)inbuffer;
 	    frameDelay = *ptr++;
-        MaxText = *ptr;
-        //Serial << "frameDelay: " << frameDelay << endl;
-        //Serial << "Length: " << j << endl;
-        iBufferLen=0;
-	    if  (MaxText>iBufferSize) {j=0;}
-        if (MaxText==0) {PanelMode=1; NewMessage(); sCommand=0;}   // End of processing if 0 length buffer
+        iReceiveBuffer = *ptr;
+#ifdef DEBUG8X8SERIAL
+        (*_debug) << "frameDelay: " << frameDelay << crlf;
+        (*_debug) << "Length: " << iReceiveBuffer << crlf;
+#endif
+		iBufferLen=0;
+		iBufferBlock=0;
+	    if  (iReceiveBuffer>iBufferSize) {iReceiveBuffer=0;}
+        if (iReceiveBuffer==0) {Serial.print(char(1)); PanelMode=1; NewMessage(); sCommand=0;}   // End of processing if 0 length buffer
        }
 	  }
       else {
        WriteByte(iBufferLen++,sr); 
-       //Serial << iBufferLen << " " << sr << endl;
-       if (iBufferLen>=MaxText) {WriteByte(iBufferLen,0); PanelMode=1; NewMessage(); sCommand=0;} // End of processing if no more text
+#ifdef DEBUG8X8SERIAL
+	   (*_debug) << iBufferLen << "/" << iReceiveBuffer << ": " <<  sr << crlf;
+#endif
+	   if (++iBufferBlock==64) {Serial.print(char(0)); iBufferBlock=0;}
+       if (iBufferLen>=iReceiveBuffer) {Serial.print(char(0)); WriteByte(iBufferLen,0); PanelMode=1; NewMessage(); sCommand=0;} // End of processing if no more text
       }
      }
      
@@ -75,30 +93,41 @@ int Panel8x8Serial::CheckSerial() {
      else if (sCommand == 2) { // Animation Load Mode
       // Parameter Processing
       if (k<=7) {
-        //Serial << "Param: " << _DEC(k) << " = " << _DEC(sr) << endl;
-        inbuffer[k++]=char(sr);  
+#ifdef DEBUG8X8SERIAL
+        (*_debug) << "Param: " << _DEC(k) << " = " << _DEC(sr) << crlf;
+#endif
+		inbuffer[k++]=char(sr);  
         if (k==8) { // Parameters
          idxScroll=0;     //Reset buffer pointer
          bIsScrolling=false;
          ptr = (uint16_t *)inbuffer;
          i = *(ptr++);
-         //Serial << "Version: " << _DEC(i) << endl;
-         if (i!=PANEL8X8SERIALFILE) {Serial.print(char(1)); PanelMode=2; sCommand=0;}  //Send back a 1 as error, wrong version.
+#ifdef DEBUG8X8SERIAL
+         (*_debug) << "Version: " << _DEC(i) << crlf;
+#endif
+		 if (i!=PANEL8X8SERIALFILE) {Serial.print(char(1)); PanelMode=2; sCommand=0;}  //Send back a 1 as error, wrong version.
          iPanels = *(ptr++);
          iFrames = *(ptr++);
          frameDelay = *(ptr);
-         //Serial << "Panels: " << iPanels << endl;
-         //Serial << "Fames: " << iFrames << endl;
-         //Serial << "Delay: " << frameDelay << endl;
-         l = iPanels * 8 * iFrames;
+#ifdef DEBUG8X8SERIAL
+		 (*_debug) << "Panels: " << iPanels << crlf;
+         (*_debug) << "Fames: " << iFrames << crlf;
+         (*_debug) << "Delay: " << frameDelay << crlf;
+#endif
+		 l = iPanels * 8 * iFrames;
 		 i=0;
+		 iBufferBlock =0;
 		 if (isBufferProgMem || l > iBufferSize) {l=0;}
          if (l==0) {Serial.print(char(1)); PanelMode=2; sCommand=0;}   // End of processing if 0 length buffer
         }
       }
       // Data Processing
       else {
-       WriteByte(i++,sr); 
+#ifdef DEBUG8X8SERIAL
+	  (*_debug) << i << "/" << l << ": " <<  sr << crlf;
+#endif
+	   WriteByte(i++,sr); 
+	   if (++iBufferBlock==8) {Serial.print(char(0)); iBufferBlock=0;}
        if (i==l) {Serial.print(char(0)); PanelMode=2; sCommand=0;} // End of processing no more data.
       }
      }
@@ -107,22 +136,28 @@ int Panel8x8Serial::CheckSerial() {
      else if (sCommand == 3) { // Live Animation Load Mode
       // Parameter Processing
       if (k<=5) {
-        //Serial << "Param: " << _DEC(k) << " = " << _DEC(sr) << endl;
-        inbuffer[k++]=char(sr);  
+#ifdef DEBUG8X8SERIAL
+  	   (*_debug) << "Param: " << _DEC(k) << " = " << _DEC(sr) << crlf;
+#endif
+	    inbuffer[k++]=char(sr);  
         if (k==6) { // Parameters
          idxScroll=0;     //Reset buffer pointer
          bIsScrolling=false;
          ptr = (uint16_t *)inbuffer;
          i = *(ptr++);
-         //Serial << "Version: " << _DEC(i) << endl;
-         if (i!=PANEL8X8SERIALFILE) {Serial.print(char(1)); PanelMode=3; sCommand=0;}  //Send back a 1 as error, wrong version.
+#ifdef DEBUG8X8SERIAL
+         (*_debug) << "Version: " << _DEC(i) << crlf;
+#endif
+		 if (i!=PANEL8X8SERIALFILE) {Serial.print(char(1)); PanelMode=3; sCommand=0;}  //Send back a 1 as error, wrong version.
          iPanels = *(ptr++);
          iFrames = 1;
          frameDelay = *(ptr);
-         //Serial << "Panels: " << iPanels << endl;
-         //Serial << "Fames: " << iFrames << endl;
-         //Serial << "Delay: " << frameDelay << endl;
-         l = iPanels * 8;
+#ifdef DEBUG8X8SERIAL
+		 (*_debug) << "Panels: " << iPanels << crlf;
+         (*_debug) << "Fames: " << iFrames << crlf;
+         (*_debug) << "Delay: " << frameDelay << crlf;
+#endif
+		 l = iPanels * 8;
          j = 0;
          i = 0;
          if (l==0) {PanelMode=3; sCommand=0;}   // End of processing if 0 length buffer
@@ -130,8 +165,10 @@ int Panel8x8Serial::CheckSerial() {
       }
       // Data Processing
       else {
-       //Serial << _DEC(l) << ":" << _DEC(sr) << endl;
-       iScroll[j][i++] = sr;
+#ifdef DEBUG8X8SERIAL
+	   (*_debug) << i << "/" << l << ": " <<  sr << crlf;
+#endif
+	   iScroll[j][i++] = sr;
        if (i==8) {i=0; j++;} 
        --l;
        if (l==0) {Serial.print(char(0)); PanelMode=3; sCommand=0; Scroll();} // End of processing no more data.

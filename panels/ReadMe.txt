@@ -7,6 +7,8 @@ By Dataman, aka Charley Jones, 8x8Panel@CRJOnes.Com
 Version Log:
 2009-09-28 V1.6 Supporting Serial8x8
 2009-09-25 V1.5 Fixup include path for unix compiler
+2009-10-06 V1.6 Working Serial Library / Flicker Free Display /  Support for Panel8x8Support Package
+2009-09-28 V1.5 Fixup include path for unix compiler 
 2009-09-23 V1.4 Discovered that defines in client code will not override library defines
 2009-09-19 V1.3 Changed pin outputs to bbb standard
 2009-09-18 V1.2 Bug fixes, replace example 4, added example 5
@@ -121,6 +123,22 @@ Set up your number of panels at the top of the code.
 Example 5 was an idea I got from the Modern Device 8x8 Panel Support Forum.
 A user wondered if the panels could support a game of life simulation.
 I'm happy to say that they can.
+
+SERIAL OBJECT:
+
+Version 1.6 introduces the Panel8x8Serial object.
+Deriving an object of this type causes the system to monitor RX for serial commands.
+More documntation to come, but this object is directly supported by the Panel8x8Support Package on Windows.
+Ability to create and upload animations,
+Update Text, Scrollrate, and even read Twitters are supported by Panel8x8Support.
+The Character Creator is the tool I used to edit the character set, and now available to you as well.
+Please be sure to set the baud rate to 9600.
+Example 6 must be loaded to use Panel8x8Support.
+
+The Serial Ojbect has a debug mode which can output on a software serial port.
+More information on this mode is discussed in Panel8x8Serial.h
+Note that the Serial Debug Mode will slow the panels down considerably.
+
 
 Short List of Switches:
 
