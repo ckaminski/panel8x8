@@ -1,0 +1,16 @@
+#Panel8x8Control - Control Application for the 8x8 Panel Library.
+
+= Introduction =
+
+Control Application for the 8x8 Panel Library.
+
+
+= Details =
+
+This program provides a means for updating text and framedelay. 
+
+Simply use an FTDI compatible cable such as the USB Bub or FTDI Cable. 
+
+The User, Password, enable block is used to program the app to read and display the most recent twitter posting on a user's twitter page.
+
+Minimum version 1.06 & Example 6 are required.
