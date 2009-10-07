@@ -1,0 +1,80 @@
+Webduino, a web server library for the Arduino platform
+
+(C) 2009, Ben Combee and Ran Talbott
+
+   Permission is hereby granted, free of charge, to any person
+   obtaining a copy of this software and associated documentation
+   files (the "Software"), to deal in the Software without
+   restriction, including without limitation the rights to use, copy,
+   modify, merge, publish, distribute, sublicense, and/or sell copies
+   of the Software, and to permit persons to whom the Software is
+   furnished to do so, subject to the following conditions:
+
+   The above copyright notice and this permission notice shall be
+   included in all copies or substantial portions of the Software.
+
+   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+   EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+   MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+   NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
+   BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
+   ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+   CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+   SOFTWARE.
+
+============
+INSTALLATION
+============
+
+Put the WebServer.h file in the hardware/libraries/webduino
+subdirectory of the arduino tree.
+
+You can put the examples in your own sketchbook directory, or in
+hardware/libraries/webduino/examples, as you prefer.
+
+Please let me know right away if you encounter any bugs, or have any
+suggestions for improvement.
+
+=======
+SUPPORT
+=======
+
+Current code is available from http://code.google.com/p/webduino/.
+There is also a mailing list for developers and users hosted at
+http://groups.google.com/group/webduino.
+
+=======
+HISTORY
+=======
+
+Release 1.2:
+
+This is an update to Ben Combee's Webduino library that adds some
+support for parameters passed as part of the URL.  I'm pretty sure I
+haven't added any new bugs, but it should still be considered "beta".
+
+ Major changes:
+
+1. The "user callback" functions have two new parameters: the
+"parameters" part of the URL string, and a flag indicating whether the
+buffer contains all of them (FALSE if part of them had to be
+discarded).
+
+2. Added nextURLparam to parse parameters out of the new buffer.  This
+is designed to allow the user code to extract keywords and values in
+sequence, much like reading a file.  It adds some error checking, so
+that, if the client includes "?password=antidisestablishmentarianism"
+in the URL, the user code can tell that part of the data was left out
+of its 16-byte buffers.
+
+3. Renamed readURLparam to readPOSTparam, because the name was
+confusing with the addition of #2.
+
+4. A new version of processConnection that allows the user to supply a
+URL buffer and specify the size.  The old version that allocates only
+32 bytes is still there.
+
+
+
+Ran
+
