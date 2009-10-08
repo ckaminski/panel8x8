@@ -32,10 +32,10 @@ Properties:
 || idxScroll || Bit index into the output panels for next character to be added ||
 || iFrames || Number of animation frames ||
 || isBufferProgMem || Binary, Is this input buffer ram (0) or rom (1) ||
-|| iScroll[Panels][8] || The panel output matrix ||
+|| iScroll`[`Panels`]``[`8`]` || The panel output matrix ||
 || iPanels || Current number of panels to draw ||
 || PanelMode || 1=Text, 2=Animating, 3=Live Streaming ||
-|| *ramBuffer || The input buffer ||
+|| `*`ramBuffer || The input buffer ||
 
 Sample Code:
 {{{
