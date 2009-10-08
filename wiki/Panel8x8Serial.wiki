@@ -17,6 +17,13 @@ Methods:
 Switches: (must define in Panel8x8Serial.h)
 || DEBUG8X8SERIAL || Enables debuging on a NewSoftSerial port. ||  
 
+Serial Commands: (passed on pin 0, RX)
+|| Esc C || Clear Panels ||
+|| Esc I + FrameDelay + Length + Text || Load Text ||
+|| Esc F + Version + Panels + FrameDelay + Data || Load Animation to RAM ||
+|| Esc L + Version + Panels + FrameDelay + Data || Live Stream Animation ||
+|| Esc S + Byte + Data || Settings Mode (Future use) ||
+
 Usage: (5 simple lines of code)
 {{{
 #include <Panel8x8Serial.h>
@@ -38,4 +45,3 @@ void setup(){panel.Begin(buffer,512,strlen(buffer),0);}
 void loop(){panel.Loop();}
 }}}
 ||
-
