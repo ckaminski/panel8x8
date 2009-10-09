@@ -8,19 +8,19 @@ This is the object provided by the Panel8x8 Library
 
 Methods:
 || About() || Displays current library version to serial ||
-|| AddChar() || Adds one character to the panel output ||
+|| !AddChar() || Adds one character to the panel output ||
 || Begin(buffer,max,len,isRom=0/1) || Initializes buffers ||
-|| ClearOutput() || Erases the panel output ||
-|| DumpPanels() || Debug routine to display panel output as text to serial port ||
-|| FillOupput() || Makes calls to AddChar() to fill the panel output ||
-|| GetByte(idx) || Gets a byte by index from the input buffer ||
+|| !ClearOutput() || Erases the panel output ||
+|| !DumpPanels() || Debug routine to display panel output as text to serial port ||
+|| !FillOupput() || Makes calls to !AddChar() to fill the panel output ||
+|| !GetByte(idx) || Gets a byte by index from the input buffer ||
 || getNextLetter(l) || Gets the next letter from the input buffer for ouput ||
-|| LoadAnimation() || Loads next animation frame to panel output ||
+|| !LoadAnimation() || Loads next animation frame to panel output ||
 || Loop() || Called to pump the panel display ||
-|| NewMessage() || Called whenever input buffer changes, resets buffer pointers ||
+|| !NewMessage() || Called whenever input buffer changes, resets buffer pointers ||
 || Scroll() || Called to output and optionally scroll the panel output ||
-|| SetScrolling(i) || Called to turn scrolling on or off ||
-|| WriteByte(idx) || Writes a byte by index to the input buffer ||
+|| !SetScrolling(i) || Called to turn scrolling on or off ||
+|| !WriteByte(idx) || Writes a byte by index to the input buffer ||
 
 Properties:
 || bIsScrolling || Whether or not the panels are allowed to scroll ||
