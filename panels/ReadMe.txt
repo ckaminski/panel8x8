@@ -7,12 +7,35 @@ By Dataman, aka Charley Jones, 8x8Panel@CRJOnes.Com
 Version Log:
 2009-09-28 V1.6 Supporting Serial8x8
 2009-09-25 V1.5 Fixup include path for unix compiler
+2009-10-09 V1.7 Ethernet & Wifi Update Samples
 2009-10-06 V1.6 Working Serial Library / Flicker Free Display /  Support for Panel8x8Support Package
 2009-09-28 V1.5 Fixup include path for unix compiler 
 2009-09-23 V1.4 Discovered that defines in client code will not override library defines
 2009-09-19 V1.3 Changed pin outputs to bbb standard
 2009-09-18 V1.2 Bug fixes, replace example 4, added example 5
 2009-09-17 V1.1 Initial 
+
+
+V 1.7
+Example 7 Added
+Ethernet Update
+Requires Webduino library from code.google.com/p/webduino (and in the support folder for your convenience)
+You'll need a Duemilanove connected to the panels using pins 4,5,6,7, power, and ground.
+Connect an Arduino compatible eterthnet shield (Wiznet) and ethernet cable to the Duemilanove.
+Adjust the sample to compatibility with your network.
+Default is 192.168.1.64
+Browse to the default ip and enter some text.
+Wala the panel is updated.
+More info in sample.
+
+Example 8 Added
+Wifi Update
+Requires WiSheild library available directly from AsyncLabs.Com (and in the support folder for your convenience.)
+You'll need a Duemilanove connected to the panels using pins 4,5,6,7, power, and ground.
+Connect an AsyncLabs 1.0 Wireless shield to the Duemilanove and power it up.
+Connect your computer to unsecure adhoc point ASYNCLABS.
+Navigate to 169.254.1.2, enter some text, wala, updated!
+More info in sample.
 
 
 Notes:
