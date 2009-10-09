@@ -11,7 +11,7 @@ Monitors the serial port (0/1) for commands from host
 Methods:
 || About() || Displays library version to serial or debug. ||
 || Begin(buffer,maxlen,currentlen,isRom=0/1) || Initializes object at 9600 baud. ||
-|| CheckSerial() || Checks for commands on serial port. ||
+|| !CheckSerial() || Checks for commands on serial port. ||
 || Loop() || Replacement for Panel8x8 Loop (calls CheckSerial). ||
 
 Switches: (must define in Panel8x8Serial.h)
