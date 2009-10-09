@@ -1,0 +1,10 @@
+#CheckSerial
+
+= Introduction =
+
+Panel8x8Serial object used to check the serial line for commands.
+
+
+= Details =
+
+See Panel8x8Serial
