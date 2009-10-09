@@ -27,10 +27,10 @@
 
 // Configuration
 #define PANELS       4  // The Max Number of panels (each panel consumes 8 bytes ram buffer spaces)
-#define LATCHPIN     4  // Pin connected to SPI latch
-#define OUTPUTENABLE 5  // Pin connected to SPI output enable - high equals off
-#define CLOCKPIN     6  // Pin connected to SPI clock - low to write new new data - high to transfer the data to the output buffers
-#define DATAPIN      7  // Pin connected to SPI clock
+#define LATCHPIN     16  // Pin connected to SPI latch
+#define OUTPUTENABLE 17  // Pin connected to SPI output enable - high equals off
+#define CLOCKPIN     18  // Pin connected to SPI clock - low to write new new data - high to transfer the data to the output buffers
+#define DATAPIN      19  // Pin connected to SPI clock
 
 // Animation File Version
 #define VERSION8X8MAJOR   1  // Current library version MAJOR.MINOR
