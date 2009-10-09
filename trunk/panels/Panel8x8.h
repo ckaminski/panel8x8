@@ -4,6 +4,7 @@
 // Kits & Schematics available at ModernDevice.Com
 //
 // By Dataman aka Charley Jones, 8x8Panel@CRJones.Com
+// 2009-10-09 V1.7 Ethernet & Wifi Update Samples
 // 2009-10-06 V1.6 - Working Serial Library / Flicker Free Display /  Support for Panel8x8Support Package
 // 2009-09-25 V1.5 - Fixup include path for unix compiler
 // 2009-09-23 V1.4 - Overrides not working from client code
@@ -27,14 +28,14 @@
 
 // Configuration
 #define PANELS       4  // The Max Number of panels (each panel consumes 8 bytes ram buffer spaces)
-#define LATCHPIN     16  // Pin connected to SPI latch
-#define OUTPUTENABLE 17  // Pin connected to SPI output enable - high equals off
-#define CLOCKPIN     18  // Pin connected to SPI clock - low to write new new data - high to transfer the data to the output buffers
-#define DATAPIN      19  // Pin connected to SPI clock
+#define LATCHPIN     4  // Pin connected to SPI latch
+#define OUTPUTENABLE 5  // Pin connected to SPI output enable - high equals off
+#define CLOCKPIN     6  // Pin connected to SPI clock - low to write new new data - high to transfer the data to the output buffers
+#define DATAPIN      7  // Pin connected to SPI clock
 
 // Animation File Version
 #define VERSION8X8MAJOR   1  // Current library version MAJOR.MINOR
-#define VERSION8X8MINOR   6  // Current library version
+#define VERSION8X8MINOR   7  // Current library version
 
 // Defines
 #define LOWMASK    255  // The LOWMASK for stripping off High Bits
