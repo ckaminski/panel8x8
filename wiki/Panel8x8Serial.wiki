@@ -14,7 +14,7 @@ Methods:
 || !CheckSerial() || Checks for commands on serial port. ||
 || Loop() || Replacement for Panel8x8 Loop (calls CheckSerial). ||
 
-Switches: (must define in Panel8x8Serial.h)
+Switches: (must define in !Panel8x8Serial.h)
 || DEBUG8X8SERIAL || Enables debuging on a NewSoftSerial port. ||  
 
 Serial Commands: (passed on pin 0, RX)
