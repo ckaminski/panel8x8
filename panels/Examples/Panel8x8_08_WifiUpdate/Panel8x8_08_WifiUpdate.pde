@@ -4,10 +4,12 @@
 // This example demonstrates updating text over wireless.
 // This should blow the doors off flexibility!
 //
-// Notes: Input currently limited to about 100 characters by PSOCK library
-// See webserver_wifi.h for define "	char inputbuf[100];"
-// Also, still need to decode url encoded strings.
-// but heck, it's a start!
+// Notes: 
+// Must be running WiShield library in WiServer mode,
+// Which means edit apps-conf.h
+// Comment out //#define APP_WEBSERVER
+// Uncomment     #define APP_WISERVER
+// Input is limited to 80 bytes due to library limitations
 //
 // The only way I know to hook up the hardware right now is with a duemilanove (2k9 for short)
 // Plug AsyncLabs Wifi Shield version 1.0 into 2k9. 
@@ -37,15 +39,9 @@
 Panel8x8 Panel;
 
 // Declare the text to be displayed, in this case, in FLASH 
-char buffer[512]={"This is a test, this is only a test."};
+char buffer[81]={"This is a test, this is only a test."};
 
-
-/*
- * Web Server
- *
- * A simple web server example using the WiShield 1.0
- */
-#include <WiShield.h>
+#include <WiServer.h>
 
 #define WIRELESS_MODE_INFRA	1
 #define WIRELESS_MODE_ADHOC	2
@@ -55,20 +51,22 @@ unsigned char local_ip[] = {169,254,1,2};	// IP address of WiShield
 unsigned char gateway_ip[] = {0,0,0,0};	// router or gateway IP address
 unsigned char subnet_mask[] = {255,255,0,0};	// subnet mask for the local network
 const prog_char ssid[] PROGMEM = {"ASYNCLABS"};		// max 32 bytes
+const prog_char webpage[] PROGMEM = {"<html><head><body><center><h1>Panel 8x8 WifiServer</h1><form method='get' action='0'>Scroll Text<br /><input type='text' name='1' size='80' maxlength='80' /><br /><input type='submit' name='3' value='submit'></form></center><body><html>"};
+
+char message[81]={"This is a test. "};
 
 unsigned char security_type = 0;	// 0 - open; 1 - WEP; 2 - WPA; 3 - WPA2
 
 // WPA/WPA2 passphrase
-const prog_char security_passphrase[] PROGMEM = {};	// max 64 characters
+const prog_char security_passphrase[] PROGMEM = {"12345678"};	// max 64 characters
 
 // WEP 128-bit keys
 // sample HEX keys
-prog_uchar wep_keys[] PROGMEM = {};
-//0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d,	// Key 0
-//0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,	0x00,	// Key 1
-//0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,	0x00,	// Key 2
-//0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,	0x00	// Key 3
-//};
+prog_uchar wep_keys[] PROGMEM = { 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d,	// Key 0
+				  0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,	// Key 1
+				  0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,	// Key 2
+				  0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00	// Key 3
+				};
 
 // setup the wireless mode
 // infrastructure - connect to AP
@@ -77,44 +75,73 @@ unsigned char wireless_mode = WIRELESS_MODE_ADHOC;
 
 unsigned char ssid_len;
 unsigned char security_passphrase_len;
+// End of wireless configuration parameters ----------------------------------------
 
-const prog_char webpage[] PROGMEM = {"HTTP/1.1 200 OK\r\nContent-Type: text/html\r\n\r\n<center><h1>Panel 8x8 WifiServer</h1><form method='get' action='0'>Scroll Text<br /><textarea name='1' rows='4' cols='40'></textarea><br /><input type='submit' name='3' value='submit'></form></center>"};
 
-// Called once by ardruino to setup the sketch
+// This is our page serving function that generates web pages
+boolean sendMyPage(char* URL) {
+  
+    // Check if the requested URL matches "/"
+    if (strcmp(URL, "/") == 0) {
+        // Use WiServer's print and println functions to write out the page content
+    }
+    else {
+     int i = 5;
+     int midx = 0;
+     char c=0;
+     byte urldata=0;
+     byte urlflag=0;
+     Panel.ClearOutput();
+     while (URL[i]!='&' && URL[i]!=0) {
+      c = URL[i++];
+      if (c=='%') {
+       urlflag=1;
+       urldata=0;
+       c=0;
+      }
+      else if (urlflag==1) {
+       urldata = (c - '0') * 16;
+       urlflag +=1;
+       c=0;
+      }
+      else if (urlflag==2) {
+       c -= '0';
+       c += urldata;
+       urlflag=0;
+      } 
+      else if (c=='+') {
+        c=32;
+      }
+      if (c>=32) {buffer[midx++]=c;}      
+     }
+    buffer[midx]=0;
+    //Serial << message << endl;
+    Panel.iBufferLen=midx;
+    Panel.NewMessage();
+    }   
+
+    WiServer.print_P(webpage);
+    return true;
+}
+
+
 void setup() {
- // Call Panel.Begin to initialize panel buffers
- // Syntax: buffer address, max buffer size, current text size, 0=Ram/1=Flash
- Panel.Begin(buffer,512,strlen(buffer),0);
- WiFi.init();
- Serial.begin(9600);
+  // Initialize WiServer and have it use the sendMyPage function to serve pages
+  WiServer.init(sendMyPage);
+  
+  // Enable Serial output and ask WiServer to generate log messages (optional)
+  //Serial.begin(9600);
+  //WiServer.enableVerboseMode(true);
+
+  Panel.Begin(buffer,81,strlen(buffer),0);
 }
 
-// Called repeatedly by arduino
-void loop() {
-  // Call Panel.Loop to pump the panels
+void loop(){
+
+  // Run WiServer
+  WiServer.server_task();
+ 
+  //delay(10);
   Panel.Loop();
-  WiFi.run();
-}
-
-extern "C" {
-
-void ClearPanelBuffer(void){
-Panel.ClearOutput();
-Panel.iBufferLen=0;
-Serial << "Clear Buffer" << endl;
-}
-
-void WritePanelByte(byte b){
-if (b=='+') {b=' ';}
-buffer[Panel.iBufferLen++]=b;
-Serial << b;
-}
-
-void NewPanelMessage(void){
-buffer[Panel.iBufferLen]=0;
-Panel.NewMessage();
-Serial << "New Message" << endl;
-}
-
 }
 
