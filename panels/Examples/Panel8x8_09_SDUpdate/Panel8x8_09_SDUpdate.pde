@@ -2,7 +2,7 @@
 // Example 09: SD Update
 //
 // This example demonstrates using an SD card serve animations.
-// Unzip animation files to sd card, attach reader as shown.
+// Unzip animations.zip to sd card, attach reader as shown.
 //
 // NOTES:
 // Hardware connection
