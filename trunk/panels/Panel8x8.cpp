@@ -335,9 +335,11 @@ void Panel8x8::Scroll() {
   //udpate scroll index, add a new char if needed
   //return the latch pin HIGH to update LED's 
   digitalWrite(LATCHPIN, HIGH);
-  digitalWrite(OUTPUTENABLE, HIGH);
+  //digitalWrite(OUTPUTENABLE, HIGH);
   digitalWrite(OUTPUTENABLE, LOW);
   delay(frameDelay);                 // change frameDelay above to control scrolling speed
+  digitalWrite(OUTPUTENABLE, HIGH);  // v1.9 controls glitching
+  
 
 }
 
