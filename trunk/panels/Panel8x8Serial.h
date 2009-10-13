@@ -4,6 +4,7 @@
 // Kits & Schematics avaialbe at ModernDevice.Com
 //
 // By Dataman aka Charley Jones, 8x8Panel@CRJones.Com
+// 2009-10-13 V1.8 SD Sample online - Wifi Sample fixed - Dance of Joy - Feature Complete 
 // 2009-10-09 V1.7 Ethernet & Wifi Update Samples
 // 2009-10-06 V1.6 Working Serial Library / Flicker Free Display /  Support for Panel8x8Support Package
 // 2009-09-17 Initial Version
