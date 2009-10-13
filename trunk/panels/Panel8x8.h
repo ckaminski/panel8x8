@@ -4,6 +4,7 @@
 // Kits & Schematics available at ModernDevice.Com
 //
 // By Dataman aka Charley Jones, 8x8Panel@CRJones.Com
+// 2009-10-13 V1.9 Glitching removed 
 // 2009-10-13 V1.8 SD Sample online - Wifi Sample fixed - Dance of Joy - Feature Complete 
 // 2009-10-09 V1.7 Ethernet & Wifi Update Samples
 // 2009-10-06 V1.6 - Working Serial Library / Flicker Free Display /  Support for Panel8x8Support Package
@@ -36,7 +37,7 @@
 
 // Animation File Version
 #define VERSION8X8MAJOR   1  // Current library version MAJOR.MINOR
-#define VERSION8X8MINOR   7  // Current library version
+#define VERSION8X8MINOR   9  // Current library version
 
 // Defines
 #define LOWMASK    255  // The LOWMASK for stripping off High Bits

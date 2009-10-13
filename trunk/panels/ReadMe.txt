@@ -5,8 +5,8 @@ Available from ModernDevice.Com
 By Dataman, aka Charley Jones, 8x8Panel@CRJOnes.Com
 
 Version Log:
-2009-09-28 V1.6 Supporting Serial8x8
-2009-09-25 V1.5 Fixup include path for unix compiler
+
+2009-10-13 V1.9 Removed glitching
 2009-10-13 V1.8 SD Sample online - Wifi Sample fixed - Dance of Joy - Feature Complete 
 2009-10-09 V1.7 Ethernet & Wifi Update Samples
 2009-10-06 V1.6 Working Serial Library / Flicker Free Display /  Support for Panel8x8Support Package
@@ -15,6 +15,11 @@ Version Log:
 2009-09-19 V1.3 Changed pin outputs to bbb standard
 2009-09-18 V1.2 Bug fixes, replace example 4, added example 5
 2009-09-17 V1.1 Initial 
+
+V 1.9
+Glitching removed
+Back to flashing leds unfortunately.
+Will continue to look for a fix.
 
 V 1.8 
 Example 9 Added
