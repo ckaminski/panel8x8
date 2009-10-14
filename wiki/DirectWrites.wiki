@@ -7,10 +7,10 @@ Writing directly to the panels
 = Details =
 
 Writing directly to the panels is as easy as:
-1) Setup up the Panels to Live/Locked
-2) Preparing your output buffer
-3) Dump this to Panel Buffer
-4) Call the Scroll method
+  * Setup up the Panels to Live/Locked
+  * Preparing your output buffer
+  * Dump this to Panel Buffer
+  * Call the Scroll method
 
 {{{
 #include <Panel8x8.h>     // Declare an object of type 
