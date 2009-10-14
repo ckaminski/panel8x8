@@ -1,0 +1,47 @@
+#DirectWrites
+
+= Introduction =
+
+Writing directly to the panels
+
+= Details =
+
+Writing directly to the panels is as easy as:
+1) Setup up the Panels to Live/Locked
+2) Preparing your output buffer
+3) Dump this to Panel Buffer
+4) Call the Scroll method
+
+{{{
+#include <Panel8x8.h>     // Declare an object of type 
+Panel8x8 Panel8x8 Panel;  // Local storage 
+byte buffer[PANELS][8];   // Working Buffer
+
+setup() {  
+ Panel.Begin(0,0,0,0);    // Initialize with no buffers
+ Panel.SetScrolling(0);   // turn off scrolling
+ Panel.PanelMode=3;       // direct animation mode
+ Panel.frameDelay=500;    // slow it down!!
+ Panel.ClearOutput();     // just for safetey
+}
+
+void display() {
+ memcpy(Panel.iScroll,buffer,PANEL*8); // blast work buffer into display buffer
+ Panel.Scroll();                       // now output it  
+}
+
+void loop() {
+ // do something to buffer
+ int i, j;             
+ for (i=0; i<8; i++) {
+  for (j=0; j<256; j++) {
+   buffer[0][i]=j;
+   // and display it
+   display();
+  }
+  // all leds on might overdrive power supply
+  buffer[0][i]=0;
+ }
+}
+ 
+}}}
