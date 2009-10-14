@@ -14,33 +14,24 @@ Writing directly to the panels is as easy as:
 {{{
 #include <Panel8x8.h>     // Declare an object of type 
 Panel8x8 Panel8x8 Panel;  // Local storage 
-
-// Working Buffer 
-byte buffer[PANELS][8]; 
+byte buffer[PANELS][8];   // Working Buffer
 
 setup() {  
-// Initialize with no buffers
-Panel.Begin(0,0,0,0);  
-// turn off scrolling
-Panel.SetScrolling(0);
-// direct animation mode
-Panel.PanelMode=3;    
-// slow it down!!
-Panel.frameDelay=500;
-// just for safetey
-Panel.ClearOutput();
+ Panel.Begin(0,0,0,0);    // Initialize with no buffers
+ Panel.SetScrolling(0);   // turn off scrolling
+ Panel.PanelMode=3;       // direct animation mode
+ Panel.frameDelay=500;    // slow it down!!
+ Panel.ClearOutput();     // just for safetey
 }
 
 void display() {
- // blast work buffer into display buffer
- memcpy(Panel.iScroll,buffer,PANEL*8);
- // now output it
- Panel.Scroll();
+ memcpy(Panel.iScroll,buffer,PANEL*8); // blast work buffer into display buffer
+ Panel.Scroll();                       // now output it  
 }
 
 void loop() {
  // do something to buffer
- int i, j;
+ int i, j;             
  for (i=0; i<8; i++) {
   for (j=0; j<256; j++) {
    buffer[0][i]=j;
@@ -50,5 +41,6 @@ void loop() {
   // all leds on might overdrive power supply
   buffer[0][i]=0;
  }
-} 
+}
+ 
 }}}
