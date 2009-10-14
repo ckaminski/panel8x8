@@ -12,6 +12,9 @@ Writing directly to the panels is as easy as:
   * Dump this to Panel Buffer
   * Call the Scroll method
 
+Note: You could cut out the middle man and write directly to the Panel Buffer.  That would cut down a few cycles but you've probably got a few to burn anyhow...
+
+
 {{{
 #include <Panel8x8.h>     // Declare an object of type 
 Panel8x8 Panel8x8 Panel;  // Local storage 
