@@ -11,7 +11,7 @@ Panel8x8Animator is a DotNet 3.5 program used to create, upload, and stream anim
 
 Allows the creation, upload, and streaming of full panel animations. 
 
-Sample animations are loaded to MyDocuments?\Animations
+Sample animations are loaded to !MyDocuments?\Animations
 Click Load and use the VCR buttons to navigate throught frames. 
 
 Use COMM to upload or stream animations to the board. 
