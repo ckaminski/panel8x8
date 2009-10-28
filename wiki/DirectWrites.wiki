@@ -18,7 +18,7 @@ Note: You could cut out the middle man and write directly to the Panel Buffer.  
 
 {{{
 #include <Panel8x8.h>     // Declare an object of type 
-Panel8x8 Panel8x8 Panel;  // Local storage 
+Panel8x8 Panel;           // Local storage 
 byte buffer[PANELS][8];   // Working Buffer
 
 setup() {  
