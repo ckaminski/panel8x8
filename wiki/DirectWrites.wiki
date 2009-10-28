@@ -21,7 +21,7 @@ Note: You could cut out the middle man and write directly to the Panel Buffer.  
 Panel8x8 Panel;           // Local storage 
 byte buffer[PANELS][8];   // Working Buffer
 
-setup() {  
+void setup() {  
  Panel.Begin(0,0,0,0);    // Initialize with no buffers
  Panel.SetScrolling(0);   // turn off scrolling
  Panel.PanelMode=3;       // direct animation mode
