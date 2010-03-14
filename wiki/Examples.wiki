@@ -22,4 +22,4 @@ All programs require Example 6, Serial Update be loaded.
 || Program || Function ||
 || Panel8x8Control || Send text and scroll rate commands to the array.  Also performs automatic twitter updates. ||
 || Panel8x8Animator || Allows for the creation and editing of animations.  May be streamed directly to the panel or loaded into ERPROM. ||
-|| Panel8x8Character || Simple program to allow editing of the character fonts used in Panel8x8. ||
+|| Panel8x8CharacterEditor || Simple program to allow editing of the character fonts used in Panel8x8. ||
